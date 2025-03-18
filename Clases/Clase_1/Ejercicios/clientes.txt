@@ -1,0 +1,11 @@
+Nombre,Apellido,Edad,Provincia,Email,EstadoCivil,Telefono
+Juan,Pérez,30,Buenos Aires,juan.perez@email.com,Soltero,11-1234-5678
+María,Gómez,25,Córdoba,maria.gomez@email.com,Casada,351-987-6543
+Carlos,Rodríguez,35,Santa Fe,carlos.rodriguez@email.com,Divorciado,341-555-1212
+Ana,López,28,Mendoza,ana.lopez@email.com,Soltera,261-222-3333
+Diego,Fernández,40,Tucumán,diego.fernandez@email.com,Casado,381-444-5555
+Laura,Martínez,32,Salta,laura.martinez@email.com,Soltera,387-666-7777
+Pedro,García,27,Entre Ríos,pedro.garcia@email.com,Soltero,343-888-9999
+Sofía,Ruiz,38,Neuquén,sofia.ruiz@email.com,Casada,299-111-2222
+Martín,Díaz,31,Chubut,martin.diaz@email.com,Divorciado,297-333-4444
+Valeria,Sánchez,29,Corrientes,valeria.sanchez@email.com,Soltera,379-555-6666

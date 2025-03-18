@@ -1,0 +1,48 @@
+Preguntas de la IA.
+
+1. ¿Qué sabes sobre los argumentos de línea de comandos? 
+2. ¿Has usado alguna vez la terminal para ejecutar scripts en Python?
+
+rta(1): He trabajado con argumentos en comandos de python, por ejemplo:
+self.move(origen, destino)
+Y lo que hace esto es mandar argumentos a otra linea de comandos de una clase la cual hacia algo en específico.
+rta(2): Si he usado la terminal para ejecutar scripts de Python, ejemplo:
+python3 chess_game.py
+
+3. ¿Cuál es la diferencia principal entre los argumentos que pasás a una función como self.move(...) y los argumentos de línea de comandos?
+4. ¿Qué ventajas tiene permitir que el usuario pase argumentos desde la terminal?
+5. ¿Cuál creés que es más útil para scripts complejos, getopt o argparse? ¿Por qué?
+
+rta(3): La diferencia radica en que los argumentos de funciones se utilizan para la comunicación interna dentro de un programa Python, y los de línea de comandos se utilizan para la comunicación externa entre el usuario y el programa.
+rta(4): Ayudan a crear scripts para hacer cosas repetitivas automáticamente y también dan flexibilidad  ya que permiten cambiar como funciona un programa sin tocar su código.
+rta(5): Creo que argparse es más útil ya que ofrece funcionalidades avanzadas como la validación de argumentos, generación automática de ayuda y subcomandos, lo que facilita el desarrollo y mantenimiento de scripts con múltiples opciones.
+
+6. ¿Qué hace sys.argv[1:] en este código?
+7. ¿Qué pasa si no pasás -i o -o?
+8. ¿Qué ventajas y desventajas ves en este ejemplo de getopt?
+
+rta(6): sys.argv es una lista en Python que contiene los argumentos de línea de comandos pasados a un script. 
+	sys.argv[1:] toma todos los argumentos que el usuario proporcionó después del nombre del script, esto se usa porque la función getopt.getopt() espera una lista de argumentos sin el nombre del script.
+rta(7): Si no pongo las opciones -i  o -o (archivo de salida), las variables input_file y output_file permanecerán vacías.
+rta(8): Ventajas: Sencillo para scripts básicos, soporta opciones cortas y largas.
+	Desventajas: Verboso para scripts complejos, carece de funcionalidades avanzadas, manejo de errores básico
+
+9. ¿Cómo harías que un argumento sea obligatorio en argparse?
+10. ¿Qué pasa si no pasás un argumento requerido?
+11. ¿Qué ventaja inmediata viste en el uso de --help?
+
+rta(9): Utilizando el parámetro required=True en parser.add_argument().
+rta(10): Me da la siguiente salida "argparse_demo.py: error: the following arguments are required: -i/--input, -o/--output".
+rta(11): La ventaja que vi a la hora de utiliar el argumento --help, es que no tuve que asentarlo en el código, y además la salida es una propia de esta funcionalidad de argparse, la cual brinda una guia automática de los argumentos existentes y de como usarlos.
+
+
+
+Desafío Práctico con argparse
+
+
+1. ¿Qué función de argparse usaste para que --edad-min acepte solo números?
+	Utilicé el parámetro type=int en la función parser.add_argument(). 
+2. ¿Qué ventaja te dio usar action='store_true' en --verbose?
+	Convierte el argumento --verbose en un interruptor booleano, si el usuario incluye --verbose en la línea de comandos, el valor de args.verbose será True. Si no lo incluye, será False
+3. ¿Por qué pasás args entero a la función y no solo args.input, args.output, etc.?
+	Permite que la función filtrar_clientes() acceda a todos los argumentos de línea de comandos a través de un solo objeto.
