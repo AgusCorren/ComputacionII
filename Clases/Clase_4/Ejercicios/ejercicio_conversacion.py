@@ -1,41 +1,56 @@
 import os
 
 def main():
-    # Crear un pipe
     r1, w1 = os.pipe()  # Pipe para padre -> hijo
     r2, w2 = os.pipe()  # Pipe para hijo -> padre
 
     pid = os.fork()
 
     if pid == 0:  # Código del proceso hijo
-        os.close(w1)  # Cierra el extremo de escritura del primer pipe
-        os.close(r2)  # Cierra el extremo de lectura del segundo pipe
+        os.close(w1)
+        os.close(r2)
 
-        mensaje = os.read(r1, 100).decode()  # Lee el mensaje del padre
-        print(f"Hijo ({os.getpid()}): Recibí del padre -> {mensaje}")
+        r_hijo = os.fdopen(r1, 'r')
+        w_hijo = os.fdopen(w2, 'w')
 
-        # Modifica el mensaje y lo envía de vuelta
-        respuesta = mensaje.upper() + "!!!"
-        os.write(w2, respuesta.encode())
+        while True:
+            mensaje = r_hijo.readline().strip()
+            if not mensaje:
+                break
+            print(f"Hijo ({os.getpid()}): Recibí del padre -> {mensaje}")
 
-        os.close(r1)
-        os.close(w2)
+            respuesta = mensaje.upper() + "!!!"
+            w_hijo.write(respuesta + "\n")
+            w_hijo.flush()  # Asegura que se envíe inmediatamente
+
+        r_hijo.close()
+        w_hijo.close()
         os._exit(0)
 
     else:  # Código del proceso padre
-        os.close(r1)  # Cierra el extremo de lectura del primer pipe
-        os.close(w2)  # Cierra el extremo de escritura del segundo pipe
+        os.close(r1)
+        os.close(w2)
 
-        mensaje = "Hola hijo, soy tu padre"
-        print(f"Padre ({os.getpid()}): Enviando -> {mensaje}")
-        os.write(w1, mensaje.encode())  # Envía el mensaje al hijo
+        w_padre = os.fdopen(w1, 'w')
+        r_padre = os.fdopen(r2, 'r')
 
-        respuesta = os.read(r2, 100).decode()  # Lee la respuesta del hijo
-        print(f"Padre ({os.getpid()}): Mi hijo me respondió -> {respuesta}")
+        frases_a_enviar = ["Hola hijo, soy tu padre", "¿Cómo estás hoy?", "Espero que todo bien", "Te envío un saludo"]
 
-        os.close(w1)
-        os.close(r2)
-        os.wait()  # Espera que el hijo termine
+        for frase in frases_a_enviar:
+            print(f"Padre ({os.getpid()}): Enviando -> {frase}")
+            w_padre.write(frase + "\n")
+            w_padre.flush()  # Asegura que se envíe inmediatamente
+
+            respuesta = r_padre.readline().strip()
+            if respuesta:
+                print(f"Padre ({os.getpid()}): Mi hijo me respondió -> {respuesta}")
+            else:
+                print("Padre: El hijo cerró la conexión o no respondió.")
+                break
+
+        w_padre.close()
+        r_padre.close()
+        os.wait()
 
 if __name__ == "__main__":
     main()
